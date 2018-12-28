@@ -22,9 +22,6 @@ public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
     @Autowired
     private Environment env;
 
-    @Autowired
-    private Tracer tracer;
-
 
     @Override
     public IndexManager indexManager() {
@@ -49,6 +46,24 @@ public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
     private static final String AGENT_HOST = "127.0.0.1";
 
     protected CouchbaseEnvironment getEnvironment() {
+
+//        Tracer tracer = ThresholdLogTracer.create(ThresholdLogReporter.builder()
+//                .kvThreshold(1, TimeUnit.MICROSECONDS) // 1 microsecond
+//                .logInterval(1, TimeUnit.SECONDS) // log every second
+//                .sampleSize(Integer.MAX_VALUE)
+//                .pretty(true) // pretty print the json output in the logs
+//                .build());
+//
+//        Tracer tracer =   Configurationnew JaegerTracer.Builder("untraced-service")
+//                .withReporter(null)
+//                .build();
+
+//                ThresholdLogTracer.create(ThresholdLogReporter.builder()
+//                        .logInterval(10, TimeUnit.SECONDS) // log every 10 seconds
+//                        .kvThreshold(1, TimeUnit.MILLISECONDS)
+//                        .n1qlThreshold(1, TimeUnit.MILLISECONDS)
+//                        .pretty(true)
+//                        .build());
 
         Tracer tracer = new JaegerTracer.Builder("couchbase")
                 .withReporter(new RemoteReporter.Builder()
